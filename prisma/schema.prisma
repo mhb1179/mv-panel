@@ -1,0 +1,163 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model server {
+  id            Int                      @id @default(autoincrement())
+  address       String
+  name          String                   @unique
+  price         Int
+  provider      String?
+  passwordToken String                   @db.Text
+  addable       Boolean                  @default(true)
+  revivable     Boolean                  @default(true)
+  createdAt     DateTime                 @default(now())
+  updatedAt     DateTime                 @updatedAt
+  services      server_service[]
+  inbounds      inbound[]
+  usage         service_inbound_usage[]
+  serviceTypes  server_serviceType[]
+}
+
+model admin {
+  id        Int        @id @default(autoincrement())
+  name      String     @unique
+  username  String     @unique
+  password  String
+  email     String     @unique
+  tgId      BigInt     @unique
+  tgUser    tgUser    @relation(fields: [tgId], references: [id])
+  active    Boolean    @default(true)
+  grade     Int        @default(3)
+  capital   Int        @default(0)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  services  service[]
+  invoices  invoice[]
+}
+
+model service {
+  id                      String                   @id @default(uuid())
+  active                  Boolean                  @default(true)
+  name                    String                   @unique
+  explanation             String?                  @db.Text
+  total                   Int
+  up                      BigInt                   @default(0)
+  down                    BigInt                   @default(0)
+  expirationDate          DateTime
+  reviveCount             Int                      @default(0)
+  disabledAt              DateTime?
+  trefficAlertSent        Boolean                  @default(false)
+  expirationDateAlertSent Boolean                  @default(false)
+  obsoleted               Boolean                  @default(false)
+  lastRevivedAt           DateTime?
+  createdAt               DateTime                 @default(now())
+  updatedAt               DateTime                 @updatedAt
+  admin                   admin                   @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  adminId                 Int
+  invoices                invoice[]
+  serviceType             serviceType             @relation(fields: [serviceTypeId], references: [id], onDelete: Cascade)
+  serviceTypeId           Int
+  servers                 server_service[]
+  usage                   service_inbound_usage[]
+  tgId                    BigInt?
+  tgUser                  tgUser?                 @relation(fields: [tgId], references: [id], onDelete: SetNull)
+}
+
+model serviceType {
+  id             Int                   @id @default(autoincrement())
+  name           String                @unique
+  days           Int
+  initial_price  Int
+  initial_GB     Int
+  max_extra_GB   Int
+  extra_GB_price Int
+  explanation    String?               @db.Text
+  userLimit      Int
+  addable        Boolean               @default(true)
+  revivable      Boolean               @default(true)
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
+  service        service[]
+  servers        server_serviceType[]
+}
+
+model invoice {
+  id            String     @id @default(nanoid())
+  service       service   @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  admin         admin     @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  serviceId     String
+  amount        Int
+  paymentStatus String     @default("unpaid")
+  paiedAt       DateTime?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  adminId       Int
+}
+
+model inbound {
+  id              Int                      @id @default(autoincrement())
+  server          server                  @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId        Int
+  serverInboundId Int
+  protocol        String
+  flow            String?
+  active          Boolean                  @default(true)
+  configLink      String                   @db.Text
+  usage           service_inbound_usage[]
+}
+
+model server_service {
+  id        String   @id @default(nanoid())
+  server    server  @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  service   service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  serverId  Int
+  serviceId String
+
+  @@unique([serverId, serviceId])
+}
+
+model server_serviceType {
+  id            String       @id @default(nanoid())
+  server        server      @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serviceType   serviceType @relation(fields: [serviceTypeId], references: [id], onDelete: Cascade)
+  serverId      Int
+  serviceTypeId Int
+
+  @@unique([serverId, serviceTypeId])
+}
+
+model setting {
+  id    Int      @id @default(autoincrement())
+  key   String   @unique
+  value String?
+}
+
+model service_inbound_usage {
+  id        String   @id @default(nanoid())
+  service   service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  inbound   inbound @relation(fields: [inboundId], references: [id], onDelete: Cascade)
+  server    server  @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serviceId String
+  inboundId Int
+  serverId  Int
+  up        BigInt   @default(0)
+  down      BigInt   @default(0)
+
+  @@unique([serverId, inboundId, serviceId])
+}
+
+model tgUser {
+  id       BigInt     @id
+  username String?
+  admin    admin?
+  services service[]
+}
