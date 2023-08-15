@@ -18,15 +18,15 @@ export default function SettingsLayout({ children }) {
     { id: "telegramBot", name: "ربات تلگرام" },
   ];
   useEffect(() => {
-    if (session.data.user.grade !== 1) {
+    if (session?.data.user.grade !== 1) {
       router.replace(
         "/dashboard/accessDenied?message=" +
           `شما به بخش تنظیمات دسترسی ندارید.`,
       );
     }
-  }, [session.data]);
-  if (session.status === "loading") return <Loading />;
-  if (session.data.user.grade !== 1) return <></>;
+  }, [session?.data]);
+  if (session?.status === "loading") return <Loading />;
+  if (session?.data.user.grade !== 1) return <></>;
   return (
     <>
       <Title>تنظیمات</Title>

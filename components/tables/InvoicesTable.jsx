@@ -32,7 +32,7 @@ function InvoicesTable({ invoices, page, invoicePerPage, updateInvoices ,sendSna
           <TableHead>
             <TableRow>
               <TableCell></TableCell>
-              {session.data.user.grade == 1 ? (
+              {session?.data.user.grade == 1 ? (
                 <TableCell align="right">ادمین</TableCell>
               ) : null}
               <TableCell align="right">نام سرویس</TableCell>
@@ -56,7 +56,7 @@ function InvoicesTable({ invoices, page, invoicePerPage, updateInvoices ,sendSna
                   <TableCell align="center">
                     {index + 1 + (page - 1) * invoicePerPage}
                   </TableCell>
-                  {session.data.user.grade == 1 ? (
+                  {session?.data.user.grade == 1 ? (
                     <TableCell align="right">{invoice.admin.name}</TableCell>
                   ) : null}
                   <TableCell align="right">{invoice.service.name}</TableCell>
@@ -112,10 +112,10 @@ function InvoicesTable({ invoices, page, invoicePerPage, updateInvoices ,sendSna
                       : null}
                     {invoice.paymentStatus == "unpaid" ? (
                       <div className="flex flex-col items-center gap-1">
-                        {session && session.data.user.grade == 1 ? null : (
+                        {session && session?.data.user.grade == 1 ? null : (
                           <HighlightOffIcon color="error" />
                         )}
-                        {session && session.data.user.grade == 1 ? (
+                        {session && session?.data.user.grade == 1 ? (
                           <>
                             <Button
                             size="small"

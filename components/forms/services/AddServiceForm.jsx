@@ -106,7 +106,7 @@ function AddServiceForm({ serviceTypeId }) {
     enqueueSnackbar("در حال پردازش", { variant: "warning" });
     data.serviceTypeId = serviceTypeId;
     data.selectedServerIds = selectedServers.map((server) => server.id);
-    data.adminId = session.data.user.id;
+    data.adminId = session?.data.user.id;
     try {
       const result = await JSON.parse(await addService(data));
       if (result.success == true) {
@@ -214,7 +214,7 @@ function AddServiceForm({ serviceTypeId }) {
           error={errors.name && true}
           helperText={errors.name?.message}
         />
-        <div className={session.data.user.grade == 1 ? null : "hidden"}>
+        <div className={session?.data.user.grade == 1 ? null : "hidden"}>
           <TextField
             id="id"
             type="text"

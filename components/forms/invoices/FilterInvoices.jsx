@@ -53,7 +53,7 @@ function FilterInvoices({ defaultSearch, updateInvoices ,sendSnackBar ,setFilter
   }, []);
   useEffect(() => {
     setLoading(true);
-    if (session.data?.user.grade == 1) {
+    if (session?.data?.user.grade == 1) {
       (async () => {
         const getAdmins = await getAllAdmins();
         getAdmins.unshift({ id: "allAdmins", name: "همه ادمین ها" });
@@ -61,10 +61,10 @@ function FilterInvoices({ defaultSearch, updateInvoices ,sendSnackBar ,setFilter
         setLoading(false);
       })();
     }
-    if (session.data?.user.grade > 1) {
+    if (session?.data?.user.grade > 1) {
       setLoading(false);
     }
-  }, [session.status]);
+  }, [session?.status]);
   function applyFilters() {
     setFilterOpen((a) => !a);
     const url = new URL(window.location.protocol + window.location.host);
@@ -118,7 +118,7 @@ function FilterInvoices({ defaultSearch, updateInvoices ,sendSnackBar ,setFilter
           </Button>
         </div>
         <Collapse orientation="vertical" in={fliterOpen}>
-          {loading || session.status == "loading" ? (
+          {loading || session?.status == "loading" ? (
             <Loading />
           ) : (
             <>
@@ -186,7 +186,7 @@ function FilterInvoices({ defaultSearch, updateInvoices ,sendSnackBar ,setFilter
                     );
                   })}
                 </TextField>
-                {session.data.user.grade == 1 ? (
+                {session?.data.user.grade == 1 ? (
                   <>
                     <Divider sx={{ marginY: "10px" }} />
                     <Popover

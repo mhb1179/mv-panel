@@ -21,7 +21,7 @@ function ResetServiceIdConfirmation({
   async function confirmReset() {
     setProccessing(true);
     sendSnackBar("در حال پردازش ...", "warning");
-    const result = await resetServiceId(service.name , session.data.user.id);
+    const result = await resetServiceId(service.name , session?.data.user.id);
     if (result.success) {
       sendSnackBar(result.message, "success");
     } else {

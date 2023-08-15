@@ -44,10 +44,10 @@ export default function Login() {
   // const [runUseEffect , setRunUseEffect] = useState(true)
   // useEffect(()=>{},[])
   useEffect(() => {
-    if (session.status === "authenticated") {
+    if (session?.status === "authenticated") {
       return router.replace("/dashboard");
     }
-  }, [session.status]);
+  }, [session?.status]);
 
   return (
     <>
@@ -63,8 +63,8 @@ export default function Login() {
         <div className="my-h-screen container flex items-center justify-center">
           <div className="mb-24 rounded-lg bg-violet-900 p-8">
             <h1 className="mb-8 text-center text-3xl font-bold">ورود ادمین</h1>
-            {session.status === "loading" ||
-            session.status === "authenticated" ? (
+            {session?.status === "loading" ||
+            session?.status === "authenticated" ? (
               <Loading />
             ) : (
               <>
