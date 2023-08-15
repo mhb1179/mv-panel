@@ -2,6 +2,10 @@ import NextAuth from "next-auth";
 import prisma from "@/lib/prisma";
 import CredentialsProvider from "next-auth/providers/credentials";
 const handler = NextAuth({
+  session: {
+    strategy: "jwt",
+  },
+
   providers: [
     CredentialsProvider({
       async authorize(credentials) {
@@ -31,10 +35,12 @@ const handler = NextAuth({
     },
 
     async session({ session, token }) {
-      session.user.grade = token.grade;
-      session.user.username = token.username;
-      session.user.id = token.id;
-      return { ...session };
+      if (session?.user) {
+        session.user.grade = token.grade;
+        session.user.username = token.username;
+        session.user.id = token.id;
+      }
+      return session;
     },
   },
   pages: {
