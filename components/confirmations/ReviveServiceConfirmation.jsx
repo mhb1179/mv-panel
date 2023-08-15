@@ -31,7 +31,7 @@ export default function ReviveServiceConfirmation({
   async function confirmRivive() {
     setProccessing(true);
     sendSnackBar("در حال پردازش ...", "warning");
-    const result = await reviveServiceById(service.id, session?.data.user.id);
+    const result = await reviveServiceById(service.id, session.data.user.id);
     if (result.success) {
       sendSnackBar(result.message, "success");
     } else {

@@ -30,7 +30,7 @@ function page({ searchParams }) {
   const [services, setServices] = useState();
 
   useEffect(() => {
-    if (session?.status == "loading") return;
+    if (session.status == "loading") return;
     (async () => {
       setServices(
         await getServices({
@@ -39,15 +39,15 @@ function page({ searchParams }) {
           page: pageNumber,
           search: filterParams.search,
           adminId:
-            session?.data?.user.grade != 1 || typeof Number(adminId) != "number"
-              ? session?.data?.user.id
+            session.data?.user.grade != 1 || typeof Number(adminId) != "number"
+              ? session.data?.user.id
               : Number(filterParams.adminId),
           servicePerPage,
         }),
       );
       setLoading(false);
     })();
-  }, [session?.status, runUseEffect, pageNumber]);
+  }, [session.status, runUseEffect, pageNumber]);
   function updateServices() {
     setLoading(true);
     setTimeout(() => {
@@ -84,7 +84,7 @@ function page({ searchParams }) {
         setFilterParams={setFilterParams}
       />
       <Title>سرویس ها</Title>
-      {loading || session?.status == "loading" ? (
+      {loading || session.status == "loading" ? (
         <Loading />
       ) : (
         <>

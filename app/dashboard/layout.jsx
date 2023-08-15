@@ -20,17 +20,17 @@ export default function DashboardRoot({ children }) {
   // const router = useRouter();
   // const session = useSession();
   // useEffect(() => {
-  //   if (session?.status === "unauthenticated") {
+  //   if (session.status === "unauthenticated") {
   //     router.replace("/login");
   //   }
-  // }, [session?.status]);
+  // }, [session.status]);
   return (
     <ThemeProvider theme={theme}>
       <DashboardLayout />
       <Context>
         <div className=" container mx-auto flex items-center justify-center p-3">
           <div className="w-full rounded-xl border-2 border-blue-500 p-5 xl:w-3/4">
-            {/* {session?.status != "authenticated" ? <Loading /> : children} */}
+            {/* {session.status != "authenticated" ? <Loading /> : children} */}
             {children}
           </div>
         </div>

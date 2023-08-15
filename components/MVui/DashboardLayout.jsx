@@ -63,7 +63,7 @@ export default function DashboardLayout({ children }) {
       >
         <div className="flex flex-col gap-3 justify-center items-center p-6 bg-violet-950">
           <Avatar sx={{ width: "60px", height: "60px" }} />
-          <h1 className="text-slate-50 font-extrabold">{session?.data?.user.name}</h1>
+          <h1 className="text-slate-50 font-extrabold">{session.data?.user.name}</h1>
         </div>
 
         <List

@@ -69,7 +69,7 @@ function FilterServices({
   }, []);
   useEffect(() => {
     setLoading(true);
-    if (session?.data?.user.grade == 1) {
+    if (session.data?.user.grade == 1) {
       (async () => {
         const getAdmins = await getAllAdmins();
         getAdmins.unshift({ id: "allAdmins", name: "همه ادمین ها" });
@@ -77,10 +77,10 @@ function FilterServices({
         setLoading(false);
       })();
     }
-    if (session?.data?.user.grade > 1) {
+    if (session.data?.user.grade > 1) {
       setLoading(false);
     }
-  }, [session?.status]);
+  }, [session.status]);
 
   async function applyFilters() {
     setFilterOpen((a) => !a);
@@ -138,7 +138,7 @@ function FilterServices({
           </Button>
         </div>
         <Collapse orientation="vertical" in={fliterOpen}>
-          {loading || session?.status == "loading" ? (
+          {loading || session.status == "loading" ? (
             <Loading />
           ) : (
             <>
@@ -199,7 +199,7 @@ function FilterServices({
                     );
                   })}
                 </TextField>
-                {session?.data.user.grade == 1 ? (
+                {session.data.user.grade == 1 ? (
                   <>
                     <Divider sx={{ marginY: "10px" }} />
                     <span></span>

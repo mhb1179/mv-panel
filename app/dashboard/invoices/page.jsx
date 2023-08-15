@@ -28,7 +28,7 @@ function Invoices({ searchParams }) {
   const [loading, setLoading] = useState(true);
   const [invoices, setInvoices] = useState();
   useEffect(() => {
-    if (session?.status == "loading") return;
+    if (session.status == "loading") return;
     (async () => {
       setInvoices(
         await getInvoices({
@@ -37,15 +37,15 @@ function Invoices({ searchParams }) {
           page: pageNumber,
           search: filterParams.search,
           adminId:
-            session?.data?.user.grade != 1 || typeof Number(adminId) != "number"
-              ? session?.data?.user.id
+            session.data?.user.grade != 1 || typeof Number(adminId) != "number"
+              ? session.data?.user.id
               : Number(filterParams.adminId),
           invoicePerPage,
         }),
       );
       setLoading(false);
     })();
-  }, [session?.status, runUseEffect, pageNumber]);
+  }, [session.status, runUseEffect, pageNumber]);
   function updateInvoices() {
     setLoading(true);
     setTimeout(() => {
@@ -82,7 +82,7 @@ function Invoices({ searchParams }) {
         setFilterParams={setFilterParams}
       />
       <Title>صورتحساب ها</Title>
-      {loading || session?.status == "loading" ? (
+      {loading || session.status == "loading" ? (
         <Loading />
       ) : (
         <>

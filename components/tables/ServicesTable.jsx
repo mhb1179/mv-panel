@@ -35,7 +35,7 @@ function ServicesTable({ services, page, servicePerPage }) {
           <TableHead>
             <TableRow>
               <TableCell></TableCell>
-              {session?.data.user.grade == 1 ? (
+              {session.data.user.grade == 1 ? (
                 <TableCell align="right">ادمین</TableCell>
               ) : null}
               <TableCell align="right">نام سرویس</TableCell>
@@ -59,7 +59,7 @@ function ServicesTable({ services, page, servicePerPage }) {
                     {index + 1 + (page - 1) * servicePerPage}
                   </TableCell>
 
-                  {session?.data.user.grade == 1 ? (
+                  {session.data.user.grade == 1 ? (
                     <TableCell align="right">{service.admin.name}</TableCell>
                   ) : null}
                   <TableCell align="right">

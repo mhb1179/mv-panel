@@ -45,7 +45,7 @@ function page({ params: { serviceName } }) {
       setLastUsageCheckTime(getService.lastUsageCheckTime);
       setLoading(false);
     })();
-  }, [session?.status, reRunUseEffect]);
+  }, [session.status, reRunUseEffect]);
   function RunUseEffect() {
     setReRunUseEffect((a) => !a);
   }
@@ -53,17 +53,17 @@ function page({ params: { serviceName } }) {
     enqueueSnackbar(message, { variant });
   }
   useEffect(() => {
-    if (session?.data && service?.admin) {
+    if (session.data && service?.admin) {
       if (
-        session?.data?.user.grade > 1 &&
-        session?.data?.user?.name != service?.admin.name
+        session.data?.user.grade > 1 &&
+        session.data?.user?.name != service?.admin.name
       ) {
         router.replace(
           "/dashboard/accessDenied?message=" + `این سرویس تحت پوشش شما نیست`,
         );
       }
     }
-  }, [loading, session?.data]);
+  }, [loading, session.data]);
   if (loading) return <Loading />;
   if (!service)
     return (
@@ -74,8 +74,8 @@ function page({ params: { serviceName } }) {
       </Error404>
     );
   if (
-    session?.data?.user.grade > 1 &&
-    session?.data?.user?.name != service?.admin.name
+    session.data?.user.grade > 1 &&
+    session.data?.user?.name != service?.admin.name
   ) {
     return <></>;
   }
