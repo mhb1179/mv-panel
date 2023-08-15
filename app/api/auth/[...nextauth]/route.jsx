@@ -31,11 +31,11 @@ const handler = NextAuth({
       token.grade = user ? user.grade : token.grade;
       token.username = user ? user.username : token.username;
       token.id = user ? user.id : token.id;
-      return { ...token };
+      return token;
     },
 
     async session({ session, token }) {
-      if (session?.user) {
+      if (session != null) {
         session.user.grade = token.grade;
         session.user.username = token.username;
         session.user.id = token.id;
