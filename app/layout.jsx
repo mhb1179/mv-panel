@@ -10,11 +10,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="fa">
-      {/* <StrictMode> */}
+      <StrictMode>
       <AuthProvider>
         <body suppressHydrationWarning={true}>{children}</body>
       </AuthProvider>
-      {/* </StrictMode> */}
+      </StrictMode>
     </html>
   );
 }
