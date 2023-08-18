@@ -237,7 +237,7 @@ async function checkUsage() {
 
     //send Alert
     const usageAlertServices = services.filter((service) => {
-      return (((Number(service.up + service.down) / (1024 ** 3)) + 1) > service.total) && service.tratrefficAlertSent == false
+      return (((Number(service.up + service.down) / (1024 ** 3)) + 1) > service.total) && service.trefficAlertSent == false
     })
     for (let i = 0; i < usageAlertServices.length; i++) {
       const service = usageAlertServices[i];
@@ -252,7 +252,7 @@ async function checkUsage() {
             timeZone: "Asia/Tehran",
           }).format(new Date()))
       }
-      await prisma.service.update({ where: { id: service.id }, data: { tratrefficAlertSent: true } })
+      await prisma.service.update({ where: { id: service.id }, data: { trefficAlertSent: true } })
     }
 
 
